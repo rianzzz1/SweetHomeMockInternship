@@ -2026,11 +2026,16 @@ public class PlanComponent extends JComponent implements PlanView, Scrollable, P
     }
 
     Level originalLevel = this.home.getSelectedLevel();
+    List<Selectable> originalSelection = this.home.getSelectedItems();
     try {
       this.home.setSelectedLevel(viewableLevels.get(pageIndex));
       return printSelectedLevel(g, pageFormat, 0, true);
     } finally {
       this.home.setSelectedLevel(originalLevel);
+      // Switching levels can deselect items on the original level.
+      if (!originalSelection.equals(this.home.getSelectedItems())) {
+        this.home.setSelectedItems(originalSelection);
+      }
     }
   }
 

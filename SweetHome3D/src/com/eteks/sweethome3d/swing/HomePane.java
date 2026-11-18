@@ -1376,7 +1376,8 @@ public class HomePane extends JRootPane implements HomeView {
           }
         }); 
       // Configure check box menu item action after setting its model to avoid losing its mnemonic
-      sortMenuItem.setAction(new ResourceAction.MenuItemAction(sortAction));
+      sortMenuItem.setAction(new ResourceAction.MenuItemAction(sortAction,
+          furnitureProperty == HomePieceOfFurniture.SortableProperty.VOLUME));
       sortMenu.add(sortMenuItem);
       sortButtonGroup.add(sortMenuItem);
     }

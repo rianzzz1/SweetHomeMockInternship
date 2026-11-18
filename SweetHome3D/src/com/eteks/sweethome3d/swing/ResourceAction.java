@@ -236,16 +236,23 @@ public class ResourceAction extends AbstractAction {
    * An action decorator for menu items.  
    */
   public static class MenuItemAction extends AbstractDecoratedAction {
+    private final boolean showToolTipOnMac;
+
     public MenuItemAction(Action action) {
+      this(action, false);
+    }
+
+    public MenuItemAction(Action action, boolean showToolTipOnMac) {
       super(action);
+      this.showToolTipOnMac = showToolTipOnMac;
     }
 
     public Object getValue(String key) {
-      // Avoid mnemonics, tooltips and icons in Mac OS X menus
+      // Avoid mnemonics and icons in Mac OS X menus. Tooltips are opt-in.
       if (OperatingSystem.isMacOSX()
           && (key.equals(MNEMONIC_KEY)
               || key.equals(SMALL_ICON)
-              || key.equals(SHORT_DESCRIPTION))) {
+              || (key.equals(SHORT_DESCRIPTION) && !this.showToolTipOnMac))) {
         return null;
       }
       return super.getValue(key);
